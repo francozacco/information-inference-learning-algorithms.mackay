@@ -1,0 +1,71 @@
+\documentclass[11pt]{article}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{enumitem}
+\usepackage{amsmath, physics}
+\usepackage{bm}
+\usepackage{adjustbox}
+\usepackage{mathrsfs}
+\usepackage{graphicx}
+\usepackage{siunitx}
+\usepackage[mathscr]{euscript}
+\usepackage{tikz}
+\usepackage{float}
+
+\title{\textbf{Solved selected problems of Information Theory, Inference, and Learning Algorithms by David J.C. MacKay.}}
+\author{Franco Zacco}
+\date{}
+
+\addtolength{\topmargin}{-3cm}
+\addtolength{\textheight}{3cm}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\diam}{\text{diam}}
+\newcommand{\cl}{\text{cl}}
+\newcommand{\bdry}{\text{bdry}}
+\newcommand{\inter}{\text{int}}
+\newcommand{\hatx}{\bm{\hat{x}}}
+\newcommand{\haty}{\bm{\hat{y}}}
+\newcommand{\hatz}{\bm{\hat{z}}}
+\newcommand{\hatrho}{\bm{\hat{\rho}}}
+\newcommand{\hatphi}{\bm{\hat{\phi}}}
+\newcommand{\hatr}{\bm{\hat{r}}}
+\newcommand{\hattheta}{\bm{\hat{\theta}}}
+\newcommand{\esp}{\text{\textvisiblespace}\hspace{0.1em}}
+
+\theoremstyle{definition}
+\newtheorem*{solution*}{Solution}
+\renewcommand*{\proofname}{Solution}
+
+\begin{document}
+\maketitle
+\thispagestyle{empty}
+
+\section*{1 - Introduction to Information Theory}
+
+\begin{proof}{\textbf{Exercise 1.2}}\\
+When using $R_3$ we get an error if two or three bits are flipped in a set of
+3 bits.
+Then the probability of two bits being flipped is
+\begin{align*}
+    P(r=2~|~f, N=3) = \binom{3}{2}f^2(1 - f)^{3 - 2}
+    = 3f^2(1 - f)
+\end{align*}
+And the probability of three bits being flipped is
+\begin{align*}
+    P(r=3~|~f, N=3) = \binom{3}{3}f^3(1 - f)^{3 - 3}
+    = f^3
+\end{align*}
+Then the total probability of getting an error when using $R_3$ is
+\begin{align*}
+    P(2~|~f, 3) + P(3~|~f, 3) &= f^3 + 3f^2(1 - f)
+    = 3f^2 - 2f^3
+\end{align*}
+We observe that $3f^2 - 2f^3$ is less than $f$ if $f < 0.5$, hence, the
+error probability is reduced by the use of $R_3$.
+\end{proof}
+
+\end{document}
