@@ -51,21 +51,243 @@ When using $R_3$ we get an error if two or three bits are flipped in a set of
 3 bits.
 Then the probability of two bits being flipped is
 \begin{align*}
-    P(r=2~|~f, N=3) = \binom{3}{2}f^2(1 - f)^{3 - 2}
+    P(r=2\mid f, N=3) = \binom{3}{2}f^2(1 - f)^{3 - 2}
     = 3f^2(1 - f)
 \end{align*}
 And the probability of three bits being flipped is
 \begin{align*}
-    P(r=3~|~f, N=3) = \binom{3}{3}f^3(1 - f)^{3 - 3}
+    P(r=3 \mid f, N=3) = \binom{3}{3}f^3(1 - f)^{3 - 3}
     = f^3
 \end{align*}
 Then the total probability of getting an error when using $R_3$ is
 \begin{align*}
-    P(2~|~f, 3) + P(3~|~f, 3) &= f^3 + 3f^2(1 - f)
+    P(2\mid f, 3) + P(3 \mid f, 3) &= f^3 + 3f^2(1 - f)
     = 3f^2 - 2f^3
 \end{align*}
 We observe that $3f^2 - 2f^3$ is less than $f$ if $f < 0.5$, hence, the
 error probability is reduced by the use of $R_3$.
 \end{proof}
 
+\cleardoublepage
+\begin{proof}{\textbf{Exercise 1.3}}
+\begin{itemize}
+\item [(a)] Let us consider the repetition code $R_N$ where $N$ is odd.\\
+We observe that we get an error when recovering the bits if at least
+$(N + 1)/2$ bits are flipped, the probability of this happening is
+\begin{align*}
+    P((N+1)/2 \mid f, N) = \binom{N}{(N+1)/2}f^{(N+1)/2}(1 - f)^{N - (N + 1)/2}
+\end{align*}
+If $(N + 1)/2 + 1$ or $(N + 1)/2 + 2$ (and so on) bits are flipped then we
+also get errors, so we need to add up all the probabilities of each of these cases
+occurring, therefore we get that the error probability is
+\begin{align*}
+    p_b = \sum_{n = (N + 1)/2}^N \binom{N}{n}f^{n}(1 - f)^{N - n}
+\end{align*}
+\item [(b)] Let $f = 0.1$ and let us consider the ratio of two subsequent terms
+\begin{align*}
+    \frac{f^n (1 - f)^{N - n}}{f^{n + 1} (1 - f)^{N - n - 1}}
+    = \frac{(1 - f)}{f} = 9
+\end{align*}
+This implies that $f^n (1 - f)^{N - n} > f^{n + 1} (1 - f)^{N - n - 1}$ for any
+$n$, so the biggest term is the one with the lowest $n$ i.e. $n = (N + 1)/2$.\\
+The second-biggest term is then $(N + 1)/2 + 1$ and we saw that the relation
+between subsequent terms for $f = 0.1$ is
+\begin{align*}
+    f^n (1 - f)^{N - n} = 9 \cdot f^{n + 1} (1 - f)^{N - n - 1}
+\end{align*}
+So the biggest term is 9 times bigger than the second-biggest term.
+\item [(c)] The largest term happens when $n = (N + 1)/2$ so by Stirling's
+approximation the largest term is given by
+\begin{align*}
+    &\binom{N}{(N+1)/2}f^{(N +1)/2}(1 - f)^{(N - 1)/2} = \\
+    &\quad= 2^{N H_2((N + 1)/2N)}f^{(N +1)/2}(1 - f)^{(N - 1)/2}
+\end{align*}
+Since this term is 9 times the next one then we may assume that the probability
+of error is
+\begin{align*}
+    p_B \approx 2^{N H_2((N + 1)/2N)}f^{(N +1)/2}(1 - f)^{(N - 1)/2}
+\end{align*}
+
+\cleardoublepage
+\item [(d)] If $N$ is reasonably big, we may approximate $H_2((N+1)/2N)$ as
+\begin{align*}
+    H_2((N+1)/2N) = H_2(1/2+1/2N) \approx H_2(1/2) = 1
+\end{align*}
+And hence the probability of error becomes
+\begin{align*}
+    p_B \approx 2^N f^{N/2}(1 - f)^{N - N/2} = 2^N (f(1-f))^{N/2} 
+\end{align*}
+We want that $p_B \leq 10^{-15}$ so taking logarithms on both sides and
+solving for $N$ we get that
+\begin{align*}
+    N + N \log(\sqrt{f(1-f)}) &= \log(10^{-15})\\
+    N &= \frac{\log(10^{-15})}{1 + \log(\sqrt{f(1-f)})}
+\end{align*}
+If we plug in $f = 0.1$ then we get that $N \approx 67$.
+\end{itemize}
+\end{proof}
+
+\cleardoublepage
+\begin{proof}{\textbf{Exercise 1.4}}\\
+We note that
+\begin{align*}
+    \mathbf{H}\mathbf{G}^T
+    = \begin{bmatrix}
+        1 & 1 & 1 & 0 & 1 & 0 & 0 \\
+        0 & 1 & 1 & 1 & 0 & 1 & 0 \\
+        1 & 0 & 1 & 1 & 0 & 0 & 1
+    \end{bmatrix}
+    \cdot \begin{bmatrix}
+        1 & 0 & 0 & 0 \\
+        0 & 1 & 0 & 0 \\
+        0 & 0 & 1 & 0 \\
+        0 & 0 & 0 & 1 \\
+        1 & 1 & 1 & 0 \\
+        0 & 1 & 1 & 1 \\
+        1 & 0 & 1 & 1
+    \end{bmatrix}
+    = \begin{bmatrix}
+        0 & 0 & 0 & 0 \\
+        0 & 0 & 0 & 0 \\
+        0 & 0 & 0 & 0 \\
+    \end{bmatrix}
+\end{align*}
+Since all the codewords are determined by $\mathbf{t} = \mathbf{G}^T\mathbf{s}$
+then
+\begin{align*}
+    \mathbf{H}\mathbf{t} = \mathbf{H}\mathbf{G}^T\mathbf{s}
+    = \begin{bmatrix}
+        0 & 0 & 0 & 0 \\
+        0 & 0 & 0 & 0 \\
+        0 & 0 & 0 & 0 \\
+    \end{bmatrix}
+    \cdot \begin{bmatrix}
+        s_1 \\ s_2 \\ s_3 \\ s_4    
+    \end{bmatrix}
+    = \begin{bmatrix}
+        0 \\ 0 \\ 0
+    \end{bmatrix}
+\end{align*}
+\end{proof}
+
+\cleardoublepage
+\begin{proof}{\textbf{Exercise 1.5}}\\
+\begin{itemize}
+\item [(a)] The received message is $\bm{r} = 1101011$ we note that
+\begin{align*}
+    r_1 + r_2 + r_3 + r_5 &= 1 + 1 + 0 + 0 = 0 \Rightarrow \text{"happy circle"}\\
+    r_2 + r_3 + r_4 + r_6 &= 1 + 0 + 1 + 1 = 1 \Rightarrow \text{"unhappy circle"}\\
+    r_1 + r_3 + r_4 + r_7 &= 1 + 0 + 1 + 1 = 1 \Rightarrow \text{"unhappy circle"}
+\end{align*}
+The only received bit inside the two "unhappy" circles is $r_4$ so it must be
+flipped, and hence the decoded message must be  $1100011$.
+Using Algorithm 1.16 since the syndrome is $\bm{z} = 011$ tells us also that
+$r_4$ must be flipped.
+\item [(b)] The received message is $\bm{r} = 0110110$ we note that
+\begin{align*}
+    r_1 + r_2 + r_3 + r_5 &= 0 + 1 + 1 + 1 = 1 \Rightarrow \text{"unhappy circle"}\\
+    r_2 + r_3 + r_4 + r_6 &= 1 + 1 + 0 + 1 = 1 \Rightarrow \text{"unhappy circle"}\\
+    r_1 + r_3 + r_4 + r_7 &= 0 + 1 + 0 + 0 = 0 \Rightarrow \text{"happy circle"}
+\end{align*}
+The syndrome is $\bm{z} = 110$ so using Algorithm 1.16, $r_2$ must be flipped 
+and hence the decoded message is $0010110$.
+\item [(c)] The received message is $\bm{r} = 0100111$ we note that
+\begin{align*}
+    r_1 + r_2 + r_3 + r_5 &= 0 + 1 + 0 + 1 = 0 \Rightarrow \text{"happy circle"}\\
+    r_2 + r_3 + r_4 + r_6 &= 1 + 0 + 0 + 1 = 0 \Rightarrow \text{"happy circle"}\\
+    r_1 + r_3 + r_4 + r_7 &= 0 + 0 + 0 + 1 = 1 \Rightarrow \text{"unhappy circle"}
+\end{align*}
+The syndrome is $\bm{z} = 001$ so using Algorithm 1.16, $r_7$ must be flipped 
+and hence the decoded message is $0100110$.
+\item [(d)] The received message is $\bm{r} = 1111111$ we note that
+\begin{align*}
+    r_1 + r_2 + r_3 + r_5 &= 1 + 1 + 1 + 1 = 0 \Rightarrow \text{"happy circle"}\\
+    r_2 + r_3 + r_4 + r_6 &= 1 + 1 + 1 + 1 = 0 \Rightarrow \text{"happy circle"}\\
+    r_1 + r_3 + r_4 + r_7 &= 1 + 1 + 1 + 1 = 0 \Rightarrow \text{"happy circle"}
+\end{align*}
+The syndrome is $\bm{z} = 000$ so there is no flipped bit and the decoded
+message is the same $1111111$.
+\end{itemize}
+\end{proof}
+
+\cleardoublepage
+\begin{proof}{\textbf{Exercise 1.6}}\\
+\begin{itemize}
+\item [(a)] To compute the probability of block error $p_B$ we compute the
+probability of a message of 7 bits to have 2 errors, where the Hamming decoding
+algorithm would not be able to decode it correctly.
+\begin{align*}
+    P(2\mid f,7) &= \binom{7}{2}f^{2}(1 - f)^{7-2} \\
+    &= 21f^2(1 - f)^5\\
+    &= 21 f^2 - 105 f^3 + 210 f^4 - 210 f^5 + 105 f^6 - 21 f^7
+    % 7! / 2! (7 - 2)!
+\end{align*}
+If we compute the probability of a message to have 3 bits flipped we get a
+leading term of the order $f^3$, which is going to be smaller to the leading
+term of $f^2$ in the case of 2 bits flipped, as we saw.
+The same thing happens for the probabilities of having 4, 5, 6, and 7 bits
+flipped, where the leading term is smaller than the $f^2$ leading term we got.
+\\
+Therefore, the leading order is $21f^2$.
+\item [(b)] When we have 2 errors in a message then the decoder will try to
+fix the message by flipping another bit so we end up with 3 errors after
+decoding.
+\\
+If we assume that the probability of block error is the probability of the
+whole block having an error then $3p_B / 7$ is approximately the probability
+of having 3 errors out of 7 bits, then taking only the leading term we see that
+the probability of bit error is
+\begin{align*}
+    p_b \approx \frac{3}{7}\cdot 21f^2 = 9f^2
+\end{align*}
+
+\end{itemize}
+\end{proof}
+
+\cleardoublepage
+\begin{proof}{\textbf{Exercise 1.7}}\\
+We know the noise vector $\bm{n}$ satisfies $\bm{H}\bm{n} = \bm{z}$ where
+$\bm{H}$ is the parity check matrix and $\bm{z}$ is the syndrome vector.
+We are interested in some $\bm{n}$ such that
+\begin{align*}
+    \bm{H}\bm{n} = \begin{bmatrix} 0 \\ 0 \\ 0 \end{bmatrix}
+\end{align*}
+But also we proved that
+\begin{align*}
+    \bm{H}\bm{t} = \begin{bmatrix} 0 \\ 0 \\ 0 \end{bmatrix}
+\end{align*}
+where $\bm{t}$ is a codeword vector.\\
+Therefore, setting $\bm{n} = \bm{t}$ we get a noise vector that give all-zero
+syndrome. Since there are 16 codewords in a (7,4) Hamming code then there are
+16 noise vectors that satisfy this.
+\end{proof}
+
+\cleardoublepage
+\begin{proof}{\textbf{Exercise 1.8}}\\
+If two bit flips happened then the decoder will try to fix it assuming there
+is only one bit flipped and hence will try to flip some bit.\\
+Two things may happen, if the decoder decides to flip one of the wrong bits 
+then we still have one error after decoding.\\
+On the other hand, if the decoder decides to flip a different bit then after
+decoding we have three errors.\\
+So, either way we have a block decoding error.\\
+If more than two bits flipped it's even worst because the Hamming decoder
+can only flip 1 bit so after the decoding process we still have an error.
+\end{proof}
+
+\cleardoublepage
+\begin{proof}{\textbf{Exercise 1.12}}\\
+The probability of getting an error when using $R_3$ is $3f^2 - 2f^3$ so if
+we use it twice to decode a message again we get a probability of error of
+\begin{align*}
+    p_b(R_3^2) = (3f^2 - 2f^3)(3f^2 - 2f^3) =  9f^4 - 12f^5 + 4f^6
+\end{align*}
+On the other hand, the probability of error of $R_9$ is
+\begin{align*}
+    p_b(R_9) &= \sum_{n=5}^9 \binom{9}{n} f^n (1 - f)^{9- n}
+\end{align*}
+We see that the leading term is of the order $f^5$ so the probability of error
+of $R_9$ is smaller than the probability of error of $R_3^2$ which leading term
+is of the order $f^4$.
+\end{proof}
 \end{document}
